@@ -1,0 +1,34 @@
+﻿@using Cipher.Web.Models
+@model Cipher.Web.Models.CipherInputModel
+
+@{
+	ViewBag.Title = "Cipher sandbox";
+}
+
+<div class="jumbotron">
+	@using (Html.BeginForm("Process", "Home"))
+	{
+		<h1>Cipher sandbox</h1>
+		<div class="form-group">
+			@Html.LabelFor(m => m.SelectedCipherType)
+			@Html.DropDownListFor(m => m.SelectedCipherType, Model.CipherTypes, new { @class = "form-control" })
+
+			<div class="radio">
+				<label>@Html.RadioButtonFor(m => m.Mode, CipherMode.Encrypt)Encrypt</label>
+			</div>
+			<div class="radio">
+				<label>@Html.RadioButtonFor(m => m.Mode, CipherMode.Decrypt)Decrypt</label>
+			</div>
+
+			<div class="form-group">
+				@Html.LabelFor(m => m.Input)
+				@Html.TextAreaFor(m => m.Input, new { @class = "form-control", style = "min-width: 100%", rows = 3, placeholder = "Type input that will be processed by selected cipher here. For morse code separate the codes with space and words with '/' character." })
+			</div>
+			@Html.LabelFor(m => m.Output)
+			<textarea readonly="readonly" cols="40" rows="3" class="form-control" style="min-width: 100%" placeholder="The result of cipher operation will be displayed here.">@Model.Output</textarea>
+			<br />
+			<button type="submit" class="btn btn-success btn-lg">Process</button>
+			
+		</div>
+	}
+</div>
