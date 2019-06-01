@@ -6,9 +6,24 @@ namespace Cipher.Core.Providers
     public class StaticCipherProvider : ICipherProvider
     {
         private readonly IDictionary<CipherType, ICipher> _ciphers = new Dictionary<CipherType, ICipher>();
-        
-        public void RegisterCipher(CipherType type, ICipher cipher)
+
+        internal StaticCipherProvider()
         {
+
+        }
+
+        public StaticCipherProvider(IEnumerable<ICipher> ciphers)
+        {
+            foreach (var cipher in ciphers)
+            {
+                RegisterCipher(cipher);
+            }
+        }
+        
+        internal void RegisterCipher(ICipher cipher)
+        {
+            var type = cipher.Type;
+
             if (_ciphers.ContainsKey(type))
             {
                 throw new  CipherAlreadyRegisteredException(type);

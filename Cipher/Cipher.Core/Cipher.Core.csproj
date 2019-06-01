@@ -42,7 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Ciphers\FakeCipher.cs" />
-    <Compile Include="ConsoleLogger.cs" />
+    <Compile Include="DebugLogger.cs" />
     <Compile Include="Exceptions\CipherAlreadyRegisteredException.cs" />
     <Compile Include="Exceptions\CipherException.cs" />
     <Compile Include="ICipher.cs" />

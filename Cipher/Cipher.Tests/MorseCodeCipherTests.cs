@@ -172,7 +172,7 @@ namespace Cipher.Tests
 
         private MorseCodeCipher CreateCipher()
         {
-            return new MorseCodeCipher(new ConsoleLogger());
+            return new MorseCodeCipher(new DebugLogger());
         }
     }
 }

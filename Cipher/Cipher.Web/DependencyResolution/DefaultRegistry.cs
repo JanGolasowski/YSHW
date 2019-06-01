@@ -36,7 +36,7 @@ namespace Cipher.Web.DependencyResolution
                     scan.AssemblyContainingType<ICipher>();
                 });
             
-            For<ILogger>().Use<ConsoleLogger>().LifecycleIs<SingletonLifecycle>();
+            For<ILogger>().Use<DebugLogger>().LifecycleIs<SingletonLifecycle>();
             For<ICipherProvider>().Use<StaticCipherProvider>().LifecycleIs<SingletonLifecycle>();
 
             RegisterCiphers();

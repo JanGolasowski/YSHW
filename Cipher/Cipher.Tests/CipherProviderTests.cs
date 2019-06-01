@@ -16,7 +16,7 @@ namespace Cipher.Tests
             var expected = CipherType.MorseCode;
 
             var staticCipherProvider = new StaticCipherProvider();
-            staticCipherProvider.RegisterCipher(CipherType.MorseCode, new FakeCipher(CipherType.MorseCode));
+            staticCipherProvider.RegisterCipher(new FakeCipher(CipherType.MorseCode));
 
             ICipherProvider provider = staticCipherProvider;
             var actual = provider.GetAvailableCiphers().ToList();
@@ -31,7 +31,7 @@ namespace Cipher.Tests
             var expected = CipherType.MorseCode;
 
             var staticCipherProvider = new StaticCipherProvider();
-            staticCipherProvider.RegisterCipher(CipherType.MorseCode, new MorseCodeCipher(new ConsoleLogger()));
+            staticCipherProvider.RegisterCipher(new MorseCodeCipher(new DebugLogger()));
 
             ICipherProvider provider = staticCipherProvider;
             var actual = provider.GetCipher(CipherType.MorseCode);
@@ -46,8 +46,8 @@ namespace Cipher.Tests
             var caesarCipherType = CipherType.Caesar;
 
             var staticCipherProvider = new StaticCipherProvider();
-            staticCipherProvider.RegisterCipher(CipherType.MorseCode, new FakeCipher(CipherType.MorseCode));
-            staticCipherProvider.RegisterCipher(CipherType.Caesar, new FakeCipher(CipherType.Caesar));
+            staticCipherProvider.RegisterCipher(new FakeCipher(CipherType.MorseCode));
+            staticCipherProvider.RegisterCipher(new FakeCipher(CipherType.Caesar));
 
             ICipherProvider provider = staticCipherProvider;
             var actual = provider.GetAvailableCiphers().ToList();
@@ -62,8 +62,8 @@ namespace Cipher.Tests
         public void StaticCipherProvider_Cannot_Register_Same_CipherType_More_Than_Once()
         {
             var staticCipherProvider = new StaticCipherProvider();
-            staticCipherProvider.RegisterCipher(CipherType.MorseCode, new FakeCipher(CipherType.MorseCode));
-            staticCipherProvider.RegisterCipher(CipherType.MorseCode, new  FakeCipher(CipherType.MorseCode));
+            staticCipherProvider.RegisterCipher(new FakeCipher(CipherType.MorseCode));
+            staticCipherProvider.RegisterCipher(new  FakeCipher(CipherType.MorseCode));
         }
 
         [TestMethod]
