@@ -44,8 +44,10 @@
     <Compile Include="Ciphers\FakeCipher.cs" />
     <Compile Include="ICipher.cs" />
     <Compile Include="CipherType.cs" />
+    <Compile Include="ICipherProvider.cs" />
     <Compile Include="Ciphers\MorseCodeCipher.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Providers\StaticCipherProvider.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
