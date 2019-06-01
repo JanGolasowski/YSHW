@@ -14,7 +14,7 @@ namespace Cipher.Tests
         {
             const string expected = ".-";
 
-            ICipher cipher = new MorseCodeCipher();
+            ICipher cipher = CreateCipher();
 
             var actual = cipher.Encrypt("a");
             
@@ -26,7 +26,7 @@ namespace Cipher.Tests
         {
             const string expected = "a";
 
-            ICipher cipher = new MorseCodeCipher();
+            ICipher cipher = CreateCipher();
 
             var actual = cipher.Decrypt(".-");
 
@@ -38,7 +38,7 @@ namespace Cipher.Tests
         {
             const string expected = ".-";
 
-            ICipher cipher = new MorseCodeCipher();
+            ICipher cipher =CreateCipher();
 
             var actual = cipher.Encrypt("A");
 
@@ -50,7 +50,7 @@ namespace Cipher.Tests
         {
             var expected = string.Empty;
 
-            ICipher cipher = new MorseCodeCipher();
+            ICipher cipher = CreateCipher();
 
             var actual = cipher.Encrypt("     ");
 
@@ -62,7 +62,7 @@ namespace Cipher.Tests
         {
             var expected = string.Empty;
 
-            ICipher cipher = new MorseCodeCipher();
+            ICipher cipher = CreateCipher();
 
             var actual = cipher.Decrypt("     ");
 
@@ -74,7 +74,7 @@ namespace Cipher.Tests
         {
             const string expected = ".... . .-.. .-.. ---";
 
-            ICipher cipher = new MorseCodeCipher();
+            ICipher cipher = CreateCipher();
 
             var actual = cipher.Encrypt("hello");
 
@@ -86,7 +86,7 @@ namespace Cipher.Tests
         {
             const string expected = ".... . .-.. .-.. ---";
 
-            ICipher cipher = new MorseCodeCipher();
+            ICipher cipher =CreateCipher();
 
             var actual = cipher.Encrypt("hello ");
 
@@ -98,7 +98,7 @@ namespace Cipher.Tests
         {
             const string expected = "hello";
 
-            ICipher cipher = new MorseCodeCipher();
+            ICipher cipher = CreateCipher();
 
             var actual = cipher.Decrypt(".... . .-.. .-.. ---");
 
@@ -110,7 +110,7 @@ namespace Cipher.Tests
         {
             const string expected = ".... . .-.. .-.. --- / .-- --- .-. .-.. -.. / ..-. .-. --- -- / -.-. .. .--. .... . .-.";
 
-            ICipher cipher = new MorseCodeCipher();
+            ICipher cipher = CreateCipher();
 
             var actual = cipher.Encrypt("Hello world from cipher");
 
@@ -122,7 +122,7 @@ namespace Cipher.Tests
         {
             const string expected = "hello world from cipher";
 
-            ICipher cipher = new MorseCodeCipher();
+            ICipher cipher = CreateCipher();
 
             var actual = cipher.Decrypt(".... . .-.. .-.. --- / .-- --- .-. .-.. -.. / ..-. .-. --- -- / -.-. .. .--. .... . .-.");
 
@@ -134,7 +134,7 @@ namespace Cipher.Tests
         {
             const string expected = ".... . .-.. .-.. ---";
 
-            ICipher cipher = new MorseCodeCipher();
+            ICipher cipher = CreateCipher();
 
             var actual = cipher.Encrypt("Hello");
 
@@ -142,18 +142,37 @@ namespace Cipher.Tests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(NotSupportedException))]
-        public void Encrpyting_Unsupported_Character_Throws_Exception()
+        [ExpectedException(typeof(CipherException))]
+        public void Encrypting_Unsupported_Character_Throws_Exception()
         {
-            ICipher cipher = new MorseCodeCipher();
+            ICipher cipher =CreateCipher();
              cipher.Encrypt("`");
         }
 
-
+        [TestMethod]
+        [ExpectedException(typeof(CipherException))]
+        public void Decrypting_Unsupported_Character_Throws_Exception()
         {
+            ICipher cipher = CreateCipher();
+            cipher.Decrypt("*");
         }
 
+        [TestMethod]
+        public void Decrypting_Encrypted_Input_Returns_Original_Input()
         {
+            const string expected = "hello world from cipher";
+
+            ICipher cipher = CreateCipher();
+            var encrypted = cipher.Encrypt(expected);
+
+            var decrypted = cipher.Decrypt(encrypted);
+
+            Assert.AreEqual(expected, decrypted);
+        }
+
+        private MorseCodeCipher CreateCipher()
+        {
+            return new MorseCodeCipher(new ConsoleLogger());
         }
     }
 }
