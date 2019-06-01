@@ -1,6 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using Cipher.Core;
+using Cipher.Core.Ciphers;
+using Cipher.Core.Exceptions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Cipher.Tests
@@ -147,130 +148,12 @@ namespace Cipher.Tests
             ICipher cipher = new MorseCodeCipher();
              cipher.Encrypt("`");
         }
-    }
 
-    public interface ICipher
-    {
-        string Encrypt(string input);
 
-        string Decrypt(string input);
-    }
-
-    public class MorseCodeCipher : ICipher
-    {
-        private readonly IDictionary<char, string> _encryptionMap = new Dictionary<char, string>
-                                                     {
-                                                         {'a', ".-"},
-                                                         {'b', "	-..."},
-                                                         {'c', "-.-."},
-                                                         {'d', "-.."},
-                                                         {'e', "."},
-                                                         {'f', "..-."},
-                                                         {'g', "--."},
-                                                         {'h', "...."},
-                                                         {'i', ".."},
-                                                         {'j', ".---"},
-                                                         {'k', "-.-"},
-                                                         {'l', ".-.."},
-                                                         {'m', "--"},
-                                                         {'n', "-."},
-                                                         {'o', "---"},
-                                                         {'p', ".--."},
-                                                         {'q', "--.-"},
-                                                         {'r', ".-."},
-                                                         {'s', "..."},
-                                                         {'t', "-"},
-                                                         {'u', "..-"},
-                                                         {'v', "...-"},
-                                                         {'w', ".--"},
-                                                         {'x', "-..-"},
-                                                         {'y', "-.--"},
-                                                         {'z', "--.."},
-                                                         {' ',"/" }
-                                                     };
-
-        private readonly IDictionary<string, char> _decryptionMap = new Dictionary<string, char>
-                                                                    {
-                                                                        {".-", 'a'},
-                                                                        {"	-...", 'b'},
-                                                                        {"-.-.", 'c'},
-                                                                        {"-..", 'd'},
-                                                                        {".", 'e'},
-                                                                        {"..-.", 'f'},
-                                                                        {"--.", 'g'},
-                                                                        {"....", 'h'},
-                                                                        {"..", 'i'},
-                                                                        {".---", 'j'},
-                                                                        {"-.-", 'k'},
-                                                                        {".-..", 'l'},
-                                                                        {"--", 'm'},
-                                                                        {"-.", 'n'},
-                                                                        {"---", 'o'},
-                                                                        {".--.", 'p'},
-                                                                        {"--.-", 'q'},
-                                                                        {".-.", 'r'},
-                                                                        {"...", 's'},
-                                                                        {"-", 't'},
-                                                                        {"..-", 'u'},
-                                                                        {"...-", 'v'},
-                                                                        {".--", 'w'},
-                                                                        {"-..-", 'x'},
-                                                                        {"-.--", 'y'},
-                                                                        {"--..", 'z'},
-                                                                        {"/",' '}
-                                                                    };
-
-        public string Encrypt(string input)
         {
-            if (string.IsNullOrWhiteSpace(input))
-                return string.Empty;
-
-            var builder = new StringBuilder();
-
-            var characters = input
-                .Trim()
-                .ToLowerInvariant()
-                .ToCharArray();
-
-            foreach (var character in characters)
-            {
-                if (_encryptionMap.TryGetValue(character, out var code))
-                {
-                    builder.AppendFormat($"{code} ");
-                }
-                else
-                {
-                    //TODO custom exception and logging
-                    throw new NotSupportedException();
-                }
-            }
-
-            return builder.ToString().TrimEnd();
         }
 
-        public string Decrypt(string input)
         {
-            if (string.IsNullOrWhiteSpace(input))
-                return string.Empty;
-
-            var builder = new StringBuilder();
-
-            var codes = input.Split(' ');
-
-            foreach (var code in codes)
-            {
-                if (_decryptionMap.TryGetValue(code, out var character))
-                {
-                    builder.Append(character);
-                }
-                else
-                {
-                    //TODO custom exception and logging
-                    throw new NotSupportedException();
-                }
-            }
-
-            return builder.ToString();
         }
     }
 }
