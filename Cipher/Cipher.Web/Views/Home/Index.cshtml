@@ -22,7 +22,7 @@
 
 			<div class="form-group">
 				@Html.LabelFor(m => m.Input)
-				@Html.TextAreaFor(m => m.Input, new { @class = "form-control", style = "min-width: 100%", rows = 3, placeholder = "Type input that will be processed by selected cipher here. For morse code separate the codes with space and words with '/' character." })
+				@Html.TextAreaFor(m => m.Input, new { @class = "form-control", style = "min-width: 100%", rows = 3, placeholder = "Enter the input that will be processed by the selected cipher. For Morse code, separate the codes with space and words with '/'." })
 			</div>
 			@Html.LabelFor(m => m.Output)
 			<textarea readonly="readonly" cols="40" rows="3" class="form-control" style="min-width: 100%" placeholder="The result of cipher operation will be displayed here.">@Model.Output</textarea>
