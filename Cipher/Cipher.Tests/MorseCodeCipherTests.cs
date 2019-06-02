@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Linq;
 using Cipher.Core;
 using Cipher.Core.Ciphers;
 using Cipher.Core.Exceptions;
@@ -168,6 +168,16 @@ namespace Cipher.Tests
             var decrypted = cipher.Decrypt(encrypted);
 
             Assert.AreEqual(expected, decrypted);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(MaxInputLengthExceededException))]
+        public void Cannot_Process_Input_That_Exceeds_Max_Length()
+        {
+            var input = string.Join("", Enumerable.Range(1, MorseCodeCipher.MAX_LENGTH_OF_INPUT + 1 ).Select(_ => "a"));
+
+            ICipher cipher = CreateCipher();
+             cipher.Encrypt(input);
         }
 
         private MorseCodeCipher CreateCipher()

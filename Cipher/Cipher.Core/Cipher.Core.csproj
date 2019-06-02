@@ -45,6 +45,7 @@
     <Compile Include="DebugLogger.cs" />
     <Compile Include="Exceptions\CipherAlreadyRegisteredException.cs" />
     <Compile Include="Exceptions\CipherException.cs" />
+    <Compile Include="Exceptions\MaxInputLengthExceededException.cs" />
     <Compile Include="ICipher.cs" />
     <Compile Include="CipherType.cs" />
     <Compile Include="ICipherProvider.cs" />

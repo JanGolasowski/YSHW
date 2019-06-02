@@ -7,6 +7,8 @@ namespace Cipher.Core.Ciphers
 {
     public class MorseCodeCipher : ICipher
     {
+        public const int MAX_LENGTH_OF_INPUT = 99999;
+
         private readonly ILogger _logger;
 
         private readonly IDictionary<char, string> _encryptionMap = new Dictionary<char, string>
@@ -83,6 +85,8 @@ namespace Cipher.Core.Ciphers
             if (string.IsNullOrWhiteSpace(input))
                 return string.Empty;
 
+            ValidateMaxLength(input);
+
             var builder = new StringBuilder();
 
             var characters = input
@@ -98,7 +102,7 @@ namespace Cipher.Core.Ciphers
                 }
                 else
                 {
-                    _logger.Error($"Failed to encrypt character \"{character}\" with {nameof(MorseCodeCipher)}.{Environment.NewLine} Original input was {input}.");
+                    _logger.Error($"Failed to encrypt character \"{character}\" with {nameof(MorseCodeCipher)}.{Environment.NewLine}Original input was {input}.");
                     
                     throw new CipherException("Failed to encrypt input.");
                 }
@@ -112,6 +116,8 @@ namespace Cipher.Core.Ciphers
             if (string.IsNullOrWhiteSpace(input))
                 return string.Empty;
 
+            ValidateMaxLength(input);
+
             var builder = new StringBuilder();
 
             var codes = input.Split(' ');
@@ -124,13 +130,21 @@ namespace Cipher.Core.Ciphers
                 }
                 else
                 {
-                    _logger.Error($"Failed to decrypt code \"{code}\" with {nameof(MorseCodeCipher)}.{Environment.NewLine} Original input was {input}.");
-                    //TODO custom exception and logging
+                    _logger.Error($"Failed to decrypt code \"{code}\" with {nameof(MorseCodeCipher)}.{Environment.NewLine}Original input was {input}.");
+                    
                     throw new CipherException("Failed to decrypt input.");
                 }
             }
 
             return builder.ToString();
+        }
+
+        private void ValidateMaxLength(string input)
+        {
+            if (input.Length > MAX_LENGTH_OF_INPUT)
+            {
+                throw new  MaxInputLengthExceededException(MAX_LENGTH_OF_INPUT);
+            }
         }
     }
 }
