@@ -39,7 +39,12 @@ namespace Cipher.Core.Ciphers
                     {'x', "-..-"},
                     {'y', "-.--"},
                     {'z', "--.."},
-                    {' ',"/" }
+                    {' ',"/" },
+                    {'?',"..--.." },
+                    {',',"--..--" },
+                    {'!',"--...-" },
+                    {'.',".-.-.-" },
+                    {';',"-.-.-." }
                 };
 
         private readonly IDictionary<string, char> _decryptionMap = new Dictionary<string, char>
@@ -70,7 +75,12 @@ namespace Cipher.Core.Ciphers
                     {"-..-", 'x'},
                     {"-.--", 'y'},
                     {"--..", 'z'},
-                    {"/",' '}
+                    {"/",' '},
+                    {"..--..",'?' },
+                    {"--..--",',' },
+                    {"--...-",'!' },
+                    {".-.-.-",'.' },
+                    {"-.-.-.",';' }
                 };
 
         public CipherType Type => CipherType.MorseCode;
